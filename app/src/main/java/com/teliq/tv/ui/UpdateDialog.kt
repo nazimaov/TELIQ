@@ -151,8 +151,10 @@ object UpdateDialog {
                         Updater.Reason.NO_APK -> "В новом релизе нет файла установки"
                         Updater.Reason.INSTALL_FAILED -> "Не удалось запустить установку"
                         Updater.Reason.NEED_PERMISSION -> "Разрешите установку из этого приложения"
+                        Updater.Reason.SIGNATURE_MISMATCH -> "Это приложение нельзя обновить поверх"
                     }
                     if (state.reason == Updater.Reason.NEED_PERMISSION) bodyText = "Включите переключатель в открывшемся окне и снова нажмите «Обновить»."
+                    if (state.reason == Updater.Reason.SIGNATURE_MISMATCH) bodyText = "Установленная версия подписана другим ключом. Один раз удалите TELIQ и установите последнюю версию из релизов GitHub — дальше обновления будут ставиться сами."
                     actions += "OK" to { Updater.dismiss() }
                 }
                 Updater.State.Idle -> Unit

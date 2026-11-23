@@ -30,7 +30,7 @@ object Updater {
 
     data class Info(val version: String, val notes: String, val apkUrl: String, val sizeBytes: Long)
 
-    enum class Reason { NOT_CONFIGURED, NETWORK, NO_APK, INSTALL_FAILED, NEED_PERMISSION }
+    enum class Reason { NOT_CONFIGURED, NETWORK, NO_APK, INSTALL_FAILED, NEED_PERMISSION, SIGNATURE_MISMATCH }
 
     sealed interface State {
         data object Idle : State
@@ -235,6 +235,16 @@ object Updater {
         val intent = Intent(Settings.ACTION_MANAGE_UNKNOWN_APP_SOURCES, Uri.parse("package:${context.packageName}"))
             .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
         runCatching { context.startActivity(intent) }
+    }
+
+    /** Итог установки от системы (см. [InstallResultReceiver]): при сбое окно показывает причину, а не «Установка…». */
+    internal fun onInstallFailed(status: Int, message: String?) {
+        Log.w(TAG, "Установка не удалась: $status $message")
+        _state.value = when (status) {
+            PackageInstaller.STATUS_FAILURE_ABORTED -> State.Idle          // пользователь отказался в окне системы
+            PackageInstaller.STATUS_FAILURE_CONFLICT -> State.Failed(Reason.SIGNATURE_MISMATCH)
+            else -> State.Failed(Reason.INSTALL_FAILED)
+        }
     }
 
     fun dismiss() {
