@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="content_padding">32dp</dimen>
+    <dimen name="header_height">80dp</dimen>
+    <dimen name="nav_rail_width">224dp</dimen>
+    <dimen name="tile_min_width">158dp</dimen>
+    <dimen name="tile_logo_height">64dp</dimen>
+    <dimen name="tile_name_size">15sp</dimen>
+    <dimen name="tile_prog_size">12sp</dimen>
+    <dimen name="tile_badge_size">10sp</dimen>
+    <dimen name="pill_text_size">17sp</dimen>
+    <dimen name="nav_label_size">17sp</dimen>
+    <dimen name="text_body">18sp</dimen>
+    <dimen name="text_small">15sp</dimen>
+    <dimen name="hero_height">184dp</dimen>
+    <dimen name="hero_title_size">32sp</dimen>
+    <dimen name="info_title_size">24sp</dimen>
+    <dimen name="info_text_size">17sp</dimen>
+    <dimen name="icon_btn">56dp</dimen>
+    <dimen name="section_title_size">24sp</dimen>
+    <dimen name="tile_elevation">0dp</dimen>
+    <dimen name="tile_focus_elevation">0dp</dimen>
+</resources>

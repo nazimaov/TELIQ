@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginVertical="3dp"
+    android:background="@drawable/sidebar_item_bg"
+    android:clickable="true"
+    android:focusable="true"
+    android:gravity="center_vertical"
+    android:minHeight="72dp"
+    android:orientation="horizontal"
+    android:paddingHorizontal="10dp"
+    android:paddingVertical="8dp">
+
+    <ImageView
+        android:id="@+id/s_logo"
+        android:layout_width="56dp"
+        android:layout_height="52dp"
+        android:background="@drawable/logo_bg"
+        android:contentDescription="logo"
+        android:padding="5dp"
+        android:scaleType="centerInside" />
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_weight="1"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/s_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:textColor="#FFFFFFFF"
+            android:textSize="@dimen/tile_name_size"
+            android:textStyle="bold"
+            tools:text="12. AZ: ATV Sinema" />
+
+        <TextView
+            android:id="@+id/s_now"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:textColor="#FFD6EBFF"
+            android:textSize="@dimen/tile_prog_size"
+            tools:text="03:10–03:30 м/с Удивительный мир" />
+
+        <TextView
+            android:id="@+id/s_next"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:textColor="@color/text_muted"
+            android:textSize="@dimen/tile_prog_size"
+            tools:text="03:30–03:40 м/с Следующая" />
+    </LinearLayout>
+
+    <ImageView
+        android:id="@+id/s_star"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:background="@drawable/btn_focusable_bg"
+        android:clickable="true"
+        android:focusable="false"
+        android:focusableInTouchMode="false"
+        android:contentDescription="Избранное"
+        android:padding="8dp"
+        android:scaleType="centerInside"
+        android:src="@drawable/ic_star_border"
+        android:tint="@color/text_muted" />
+</LinearLayout>

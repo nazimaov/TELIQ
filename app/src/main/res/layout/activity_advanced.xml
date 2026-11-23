@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg_main"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingHorizontal="@dimen/content_padding">
+
+        <ImageView
+            android:id="@+id/logo"
+            android:layout_width="wrap_content"
+            android:layout_height="22dp"
+            android:adjustViewBounds="true"
+            android:contentDescription="TELIQ" />
+
+        <Space
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_weight="1" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Дополнительные настройки"
+            android:textColor="@color/text_primary"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+    </LinearLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:padding="32dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <!-- ВИДЕО -->
+            <TextView style="@style/SectionLabel" android:text="🎬  Видео" />
+
+            <LinearLayout android:id="@+id/row_aspect" style="@style/SettingCard">
+                <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content"
+                    android:layout_weight="1" android:orientation="vertical">
+                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                        android:text="Соотношение сторон" android:textColor="@color/text_primary"
+                        android:textSize="14sp" android:textStyle="bold" />
+                    <TextView android:id="@+id/val_aspect" android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" android:layout_marginTop="2dp"
+                        android:textColor="@color/text_muted" android:textSize="11sp"
+                        tools:text="Авто"
+                        xmlns:tools="http://schemas.android.com/tools" />
+                </LinearLayout>
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    android:text="›" android:textColor="@color/text_muted" android:textSize="20sp" />
+            </LinearLayout>
+
+            <LinearLayout android:id="@+id/row_hw" style="@style/SettingCard">
+                <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content"
+                    android:layout_weight="1" android:orientation="vertical">
+                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                        android:text="Аппаратное декодирование" android:textColor="@color/text_primary"
+                        android:textSize="14sp" android:textStyle="bold" />
+                    <TextView android:id="@+id/val_hw" android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" android:layout_marginTop="2dp"
+                        android:textColor="@color/text_muted" android:textSize="11sp" />
+                </LinearLayout>
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    android:text="›" android:textColor="@color/text_muted" android:textSize="20sp" />
+            </LinearLayout>
+
+            <LinearLayout android:id="@+id/row_deinterlace" style="@style/SettingCard">
+                <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content"
+                    android:layout_weight="1" android:orientation="vertical">
+                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                        android:text="Деинтерлейсинг" android:textColor="@color/text_primary"
+                        android:textSize="14sp" android:textStyle="bold" />
+                    <TextView android:id="@+id/val_deinterlace" android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" android:layout_marginTop="2dp"
+                        android:textColor="@color/text_muted" android:textSize="11sp" />
+                </LinearLayout>
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    android:text="›" android:textColor="@color/text_muted" android:textSize="20sp" />
+            </LinearLayout>
+
+            <!-- СЕТЬ -->
+            <TextView style="@style/SectionLabel" android:text="🌐  Сеть" />
+
+            <LinearLayout android:id="@+id/row_ua" style="@style/SettingCard">
+                <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content"
+                    android:layout_weight="1" android:orientation="vertical">
+                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                        android:text="User-Agent" android:textColor="@color/text_primary"
+                        android:textSize="14sp" android:textStyle="bold" />
+                    <TextView android:id="@+id/val_ua" android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" android:layout_marginTop="2dp"
+                        android:textColor="@color/text_muted" android:textSize="11sp" />
+                </LinearLayout>
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    android:text="›" android:textColor="@color/text_muted" android:textSize="20sp" />
+            </LinearLayout>
+
+            <LinearLayout android:id="@+id/row_buffer" style="@style/SettingCard">
+                <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content"
+                    android:layout_weight="1" android:orientation="vertical">
+                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                        android:text="Буферизация" android:textColor="@color/text_primary"
+                        android:textSize="14sp" android:textStyle="bold" />
+                    <TextView android:id="@+id/val_buffer" android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" android:layout_marginTop="2dp"
+                        android:textColor="@color/text_muted" android:textSize="11sp" />
+                </LinearLayout>
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    android:text="›" android:textColor="@color/text_muted" android:textSize="20sp" />
+            </LinearLayout>
+
+            <!-- РАСПИСАНИЕ -->
+            <TextView style="@style/SectionLabel" android:text="📅  Расписание (EPG)" />
+
+            <LinearLayout android:id="@+id/row_epg_offset" style="@style/SettingCard">
+                <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content"
+                    android:layout_weight="1" android:orientation="vertical">
+                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                        android:text="Смещение времени" android:textColor="@color/text_primary"
+                        android:textSize="14sp" android:textStyle="bold" />
+                    <TextView android:id="@+id/val_epg_offset" android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" android:layout_marginTop="2dp"
+                        android:textColor="@color/text_muted" android:textSize="11sp" />
+                </LinearLayout>
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    android:text="›" android:textColor="@color/text_muted" android:textSize="20sp" />
+            </LinearLayout>
+
+            <!-- ИНТЕРФЕЙС -->
+            <TextView style="@style/SectionLabel" android:text="🎨  Интерфейс" />
+
+            <LinearLayout android:id="@+id/row_show_numbers" style="@style/SettingCard">
+                <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content"
+                    android:layout_weight="1" android:orientation="vertical">
+                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                        android:text="Показывать номера каналов" android:textColor="@color/text_primary"
+                        android:textSize="14sp" android:textStyle="bold" />
+                    <TextView android:id="@+id/val_show_numbers" android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" android:layout_marginTop="2dp"
+                        android:textColor="@color/text_muted" android:textSize="11sp" />
+                </LinearLayout>
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    android:text="›" android:textColor="@color/text_muted" android:textSize="20sp" />
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:gravity="center"
+                android:text="Back — закрыть"
+                android:textColor="@color/text_muted"
+                android:textSize="10sp" />
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

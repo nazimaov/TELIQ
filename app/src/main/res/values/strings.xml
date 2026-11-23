@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">TELIQ</string>
+    <string name="browse_title">TELIQ</string>
+    <string name="settings">Настройки</string>
+    <string name="reload_playlist">Обновить плейлист</string>
+    <string name="open_playlist">Открыть плейлист</string>
+    <string name="add_epg">Добавить расписание (EPG)</string>
+    <string name="buffer_mode">Режим буферизации</string>
+    <string name="buffer_low">Реальное время (500 мс)</string>
+    <string name="buffer_balanced">Сбалансированный (1500 мс)</string>
+    <string name="buffer_stable">Стабильный (3000 мс)</string>
+</resources>

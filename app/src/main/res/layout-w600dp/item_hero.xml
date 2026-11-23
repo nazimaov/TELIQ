@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="6dp"
+    android:background="@drawable/hero_bg"
+    android:elevation="6dp"
+    android:gravity="center_vertical"
+    android:minHeight="@dimen/hero_height"
+    android:orientation="horizontal"
+    android:outlineSpotShadowColor="#FF5AC8FF"
+    android:padding="16dp"
+    tools:targetApi="p">
+
+    <ImageView
+        android:id="@+id/hero_logo"
+        android:layout_width="88dp"
+        android:layout_height="60dp"
+        android:background="@drawable/logo_bg"
+        android:contentDescription="logo"
+        android:padding="6dp"
+        android:scaleType="centerInside" />
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="12dp"
+        android:layout_weight="1"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:letterSpacing="0.1"
+            android:maxLines="1"
+            android:text="ПРОДОЛЖИТЬ ПРОСМОТР"
+            android:textColor="@color/accent"
+            android:textSize="11sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/hero_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:textColor="#FFFFFFFF"
+            android:textSize="@dimen/hero_title_size"
+            android:textStyle="bold"
+            tools:text="Cartoon Network HD" />
+
+        <TextView
+            android:id="@+id/hero_program"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:textColor="@color/text_primary"
+            android:textSize="@dimen/text_body"
+            tools:text="03:10–03:30  Удивительный мир Гамбола" />
+
+        <ProgressBar
+            android:id="@+id/hero_progress"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="match_parent"
+            android:layout_height="6dp"
+            android:layout_marginTop="8dp"
+            android:max="1000"
+            android:progressDrawable="@drawable/progress_neon" />
+
+        <TextView
+            android:id="@+id/hero_timing"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:textColor="@color/text_muted"
+            android:textSize="@dimen/text_small"
+            tools:text="Прошло 12 мин  •  Осталось 7 мин" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/hero_play"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/btn_play_bg"
+        android:clickable="true"
+        android:focusable="true"
+        android:gravity="center"
+        android:paddingHorizontal="16dp"
+        android:paddingVertical="12dp"
+        android:text="▶  Смотреть"
+        android:textColor="#FF1A1652"
+        android:textSize="@dimen/text_body"
+        android:textStyle="bold" />
+
+    <ImageButton
+        android:id="@+id/hero_close"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="6dp"
+        android:background="@drawable/btn_focusable_bg"
+        android:contentDescription="Скрыть"
+        android:focusable="true"
+        android:padding="10dp"
+        android:scaleType="centerInside"
+        android:src="@drawable/ic_close"
+        android:tint="@color/text_muted" />
+</LinearLayout>

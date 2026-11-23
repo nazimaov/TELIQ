@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="content_padding">24dp</dimen>
+    <dimen name="header_height">72dp</dimen>
+    <dimen name="nav_rail_width">224dp</dimen>
+    <dimen name="tile_min_width">190dp</dimen>
+    <dimen name="tile_logo_height">72dp</dimen>
+    <dimen name="hero_height">160dp</dimen>
+    <dimen name="hero_title_size">26sp</dimen>
+    <dimen name="section_title_size">20sp</dimen>
+</resources>

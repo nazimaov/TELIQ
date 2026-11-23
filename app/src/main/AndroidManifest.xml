@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <!-- Самообновление: установка скачанного APK (система спрашивает подтверждение) -->
+    <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES" />
+
+    <!-- Одно приложение для Android TV, телефонов и планшетов: ни touch, ни leanback не обязательны -->
+    <uses-feature
+        android:name="android.hardware.touchscreen"
+        android:required="false" />
+    <uses-feature
+        android:name="android.software.leanback"
+        android:required="false" />
+
+    <application
+        android:name=".TeliqApp"
+        android:allowBackup="true"
+        android:banner="@drawable/teliq_banner"
+        android:icon="@drawable/teliq"
+        android:label="@string/app_name"
+        android:networkSecurityConfig="@xml/network_security_config"
+        android:resizeableActivity="true"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.Teliq.Main"
+        tools:targetApi="33">
+
+        <receiver
+            android:name=".update.InstallResultReceiver"
+            android:exported="false" />
+
+        <activity
+            android:name=".MainActivity"
+            android:exported="true"
+            android:launchMode="singleTop"
+            android:theme="@style/Theme.Teliq.Splash">
+            <!-- Телефон / планшет -->
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+            <!-- Android TV: значок на главном экране приставки -->
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LEANBACK_LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <activity
+            android:name=".PlayerActivity"
+            android:configChanges="screenSize|smallestScreenSize|screenLayout|orientation|keyboardHidden|keyboard|uiMode"
+            android:exported="false"
+            android:resizeableActivity="true"
+            android:screenOrientation="fullSensor"
+            android:supportsPictureInPicture="true"
+            android:theme="@style/Theme.Teliq.Player" />
+
+        <activity
+            android:name=".ui.SettingsActivity"
+            android:exported="false"
+            android:theme="@style/Theme.Teliq.Dialog" />
+
+        <activity
+            android:name=".ui.EditorActivity"
+            android:exported="false"
+            android:theme="@style/Theme.Teliq.Main" />
+
+        <activity
+            android:name=".ui.SearchActivity"
+            android:exported="false"
+            android:theme="@style/Theme.Teliq.Main"
+            android:windowSoftInputMode="adjustResize" />
+
+        <activity
+            android:name=".ui.ScheduleActivity"
+            android:exported="false"
+            android:theme="@style/Theme.Teliq.Main" />
+
+        <activity
+            android:name=".ui.AdvancedSettingsActivity"
+            android:exported="false"
+            android:theme="@style/Theme.Teliq.Main" />
+    </application>
+</manifest>

@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/tile_root"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="6dp"
+    android:background="@drawable/tile_bg"
+    android:clickable="true"
+    android:elevation="@dimen/tile_elevation"
+    android:focusable="true"
+    android:orientation="vertical"
+    android:outlineSpotShadowColor="#FF37C8FF"
+    android:padding="10dp"
+    tools:targetApi="p">
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/tile_logo_height">
+
+        <ImageView
+            android:id="@+id/tile_logo"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/logo_bg"
+            android:contentDescription="logo"
+            android:padding="6dp"
+            android:scaleType="centerInside" />
+
+        <TextView
+            android:id="@+id/tile_fav"
+            android:layout_width="34dp"
+            android:layout_height="34dp"
+            android:layout_gravity="top|end"
+            android:clickable="true"
+            android:gravity="center"
+            android:text="☆"
+            android:textColor="#FF2A3D8F"
+            android:textSize="20sp" />
+    </FrameLayout>
+
+    <TextView
+        android:id="@+id/tile_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:textColor="@color/text_primary"
+        android:textSize="@dimen/tile_name_size"
+        android:textStyle="bold"
+        tools:text="CNN International" />
+
+    <TextView
+        android:id="@+id/tile_program"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="2dp"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:textColor="@color/text_muted"
+        android:textSize="@dimen/tile_prog_size"
+        tools:text="14:00–15:00 World News" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/tile_group"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/badge_group_bg"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:paddingHorizontal="8dp"
+            android:paddingVertical="3dp"
+            android:textColor="#FFFFFFFF"
+            android:textSize="@dimen/tile_badge_size"
+            tools:text="News" />
+
+        <TextView
+            android:id="@+id/tile_live"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="6dp"
+            android:background="@drawable/badge_live_bg"
+            android:paddingHorizontal="6dp"
+            android:paddingVertical="3dp"
+            android:text="LIVE"
+            android:textColor="#FFFFFFFF"
+            android:textSize="@dimen/tile_badge_size"
+            android:textStyle="bold" />
+    </LinearLayout>
+</LinearLayout>

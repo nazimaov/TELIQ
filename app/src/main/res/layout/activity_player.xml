@@ -1,0 +1,479 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/black">
+
+    <org.videolan.libvlc.util.VLCVideoLayout
+        android:id="@+id/video_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:focusable="true"
+        android:keepScreenOn="true" />
+
+    <!-- Рамка «окошка» плеера, пока открыт список каналов -->
+    <View
+        android:id="@+id/mini_frame"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@drawable/mini_frame"
+        android:visibility="gone" />
+
+    <!-- Карточка играющего канала под окошком плеера, пока открыт список каналов (как в ПК-версии) -->
+    <LinearLayout
+        android:id="@+id/mini_card"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="top|end"
+        android:background="@drawable/info_card_bg"
+        android:orientation="vertical"
+        android:padding="14dp"
+        android:visibility="gone">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/mini_logo"
+                android:layout_width="72dp"
+                android:layout_height="52dp"
+                android:background="@drawable/logo_bg"
+                android:contentDescription="logo"
+                android:padding="5dp"
+                android:scaleType="centerInside" />
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="12dp"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/mini_title"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ellipsize="end"
+                    android:maxLines="1"
+                    android:textColor="#FFFFFFFF"
+                    android:textSize="@dimen/info_title_size"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/mini_program"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ellipsize="end"
+                    android:maxLines="1"
+                    android:textColor="@color/text_primary"
+                    android:textSize="@dimen/info_text_size" />
+            </LinearLayout>
+
+            <ImageView
+                android:id="@+id/mini_fav"
+                android:layout_width="@dimen/icon_btn"
+                android:layout_height="@dimen/icon_btn"
+                android:layout_marginStart="4dp"
+                android:contentDescription="Избранное"
+                android:focusable="false"
+                android:padding="10dp"
+                android:scaleType="centerInside"
+                android:src="@drawable/ic_star_border" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/mini_time_row"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/mini_t_start"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/text_muted"
+                android:textSize="@dimen/text_small"
+                android:textStyle="bold" />
+
+            <ProgressBar
+                android:id="@+id/mini_progress"
+                style="?android:attr/progressBarStyleHorizontal"
+                android:layout_width="0dp"
+                android:layout_height="8dp"
+                android:layout_marginHorizontal="10dp"
+                android:layout_weight="1"
+                android:max="1000"
+                android:progressDrawable="@drawable/progress_neon" />
+
+            <TextView
+                android:id="@+id/mini_t_end"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/text_muted"
+                android:textSize="@dimen/text_small"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/mini_next"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:textColor="@color/text_muted"
+            android:textSize="@dimen/text_small" />
+    </LinearLayout>
+
+    <!-- Ряд «Избранное» под карточкой канала (как в ПК-версии): касанием — смотреть -->
+    <LinearLayout
+        android:id="@+id/mini_fav_box"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="top|end"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <TextView
+            android:id="@+id/mini_fav_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingHorizontal="6dp"
+            android:textColor="#FFFFFFFF"
+            android:textSize="@dimen/text_body"
+            android:textStyle="bold" />
+
+        <HorizontalScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:focusable="false"
+            android:scrollbars="none">
+
+            <LinearLayout
+                android:id="@+id/mini_fav_row"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal" />
+        </HorizontalScrollView>
+    </LinearLayout>
+
+    <!-- Подсказка о жесте / громкости -->
+    <TextView
+        android:id="@+id/hud"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="top|center_horizontal"
+        android:layout_marginTop="28dp"
+        android:background="@drawable/hud_bg"
+        android:paddingHorizontal="20dp"
+        android:paddingVertical="10dp"
+        android:textColor="#FFFFFFFF"
+        android:textSize="@dimen/text_body"
+        android:textStyle="bold"
+        android:visibility="gone"
+        tools:text="🔊 60%" />
+
+    <!-- Карточка канала (как в десктопной версии) -->
+    <LinearLayout
+        android:id="@+id/info_card"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:layout_margin="14dp"
+        android:background="@drawable/info_card_bg"
+        android:elevation="8dp"
+        android:orientation="vertical"
+        android:outlineSpotShadowColor="#FF5AC8FF"
+        android:padding="14dp"
+        android:visibility="gone"
+        tools:targetApi="p"
+        tools:visibility="visible">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/info_logo"
+                android:layout_width="72dp"
+                android:layout_height="52dp"
+                android:background="@drawable/logo_bg"
+                android:contentDescription="logo"
+                android:padding="5dp"
+                android:scaleType="centerInside" />
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="12dp"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/info_title"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ellipsize="end"
+                    android:maxLines="1"
+                    android:textColor="#FFFFFFFF"
+                    android:textSize="@dimen/info_title_size"
+                    android:textStyle="bold"
+                    tools:text="Cartoon Network HD" />
+
+                <TextView
+                    android:id="@+id/info_program"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ellipsize="end"
+                    android:maxLines="1"
+                    android:textColor="@color/text_primary"
+                    android:textSize="@dimen/info_text_size"
+                    tools:text="03:10–03:30  м/с Удивительный мир Гамбола" />
+            </LinearLayout>
+
+                <ImageButton
+                    android:id="@+id/btn_fav"
+                    android:layout_width="@dimen/icon_btn"
+                    android:layout_height="@dimen/icon_btn"
+                    android:layout_marginStart="4dp"
+                    android:background="@drawable/btn_focusable_bg"
+                    android:contentDescription="Избранное"
+                    android:focusable="true"
+                    android:padding="10dp"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/ic_star_border"
+                    android:tint="@color/text_primary" />
+
+                <ImageButton
+                    android:id="@+id/btn_close_player"
+                    android:layout_width="@dimen/icon_btn"
+                    android:layout_height="@dimen/icon_btn"
+                    android:layout_marginStart="4dp"
+                    android:background="@drawable/btn_focusable_bg"
+                    android:contentDescription="Закрыть"
+                    android:focusable="true"
+                    android:padding="10dp"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/ic_close"
+                    android:tint="@color/text_primary" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/info_time_row"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/info_t_start"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/text_muted"
+                android:textSize="@dimen/text_small"
+                android:textStyle="bold"
+                tools:text="03:10" />
+
+            <ProgressBar
+                android:id="@+id/info_progress"
+                style="?android:attr/progressBarStyleHorizontal"
+                android:layout_width="0dp"
+                android:layout_height="8dp"
+                android:layout_marginHorizontal="10dp"
+                android:layout_weight="1"
+                android:max="1000"
+                android:progressDrawable="@drawable/progress_neon" />
+
+            <TextView
+                android:id="@+id/info_t_end"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/text_muted"
+                android:textSize="@dimen/text_small"
+                android:textStyle="bold"
+                tools:text="03:30" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/info_timing"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:textColor="#FFFFFFFF"
+            android:textSize="@dimen/text_small"
+            android:textStyle="bold"
+            tools:text="Осталось 7 мин  •  Прошло 12 мин" />
+
+        <LinearLayout
+            android:id="@+id/controls_row"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+                <ImageButton
+                    android:id="@+id/btn_prev"
+                    android:layout_width="@dimen/icon_btn"
+                    android:layout_height="@dimen/icon_btn"
+                    android:layout_marginStart="0dp"
+                    android:background="@drawable/btn_focusable_bg"
+                    android:contentDescription="Предыдущий канал"
+                    android:focusable="true"
+                    android:padding="10dp"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/ic_skip_prev"
+                    android:tint="@color/text_primary" />
+
+                <ImageButton
+                    android:id="@+id/btn_list"
+                    android:layout_width="@dimen/icon_btn"
+                    android:layout_height="@dimen/icon_btn"
+                    android:layout_marginStart="18dp"
+                    android:background="@drawable/btn_focusable_bg"
+                    android:contentDescription="Список каналов"
+                    android:focusable="true"
+                    android:padding="10dp"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/ic_list"
+                    android:tint="@color/text_primary" />
+
+                <ImageButton
+                    android:id="@+id/btn_next"
+                    android:layout_width="@dimen/icon_btn"
+                    android:layout_height="@dimen/icon_btn"
+                    android:layout_marginStart="18dp"
+                    android:background="@drawable/btn_focusable_bg"
+                    android:contentDescription="Следующий канал"
+                    android:focusable="true"
+                    android:padding="10dp"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/ic_skip_next"
+                    android:tint="@color/text_primary" />
+
+                <ImageButton
+                    android:id="@+id/btn_schedule"
+                    android:layout_width="@dimen/icon_btn"
+                    android:layout_height="@dimen/icon_btn"
+                    android:layout_marginStart="18dp"
+                    android:background="@drawable/btn_focusable_bg"
+                    android:contentDescription="Расписание"
+                    android:focusable="true"
+                    android:padding="10dp"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/ic_calendar"
+                    android:tint="@color/text_primary" />
+
+        </LinearLayout>
+    </LinearLayout>
+
+    <!-- Список каналов: затемнение справа закрывает панель касанием -->
+    <FrameLayout
+        android:id="@+id/sidebar_root"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone">
+
+        <View
+            android:id="@+id/sidebar_scrim"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@android:color/transparent"
+            android:clickable="true" />
+
+        <LinearLayout
+            android:id="@+id/sidebar"
+            android:layout_width="420dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="start"
+            android:layout_margin="10dp"
+            android:background="@drawable/panel_bg"
+            android:orientation="vertical"
+            android:padding="12dp">
+
+            <HorizontalScrollView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:clipToPadding="false"
+                android:paddingVertical="4dp"
+                android:scrollbars="none">
+
+                <LinearLayout
+                    android:id="@+id/sidebar_categories"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal" />
+            </HorizontalScrollView>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="6dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingHorizontal="6dp">
+
+                <TextView
+                    android:id="@+id/sidebar_title"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:ellipsize="end"
+                    android:maxLines="1"
+                    android:text="Каналы"
+                    android:textColor="#FFFFFFFF"
+                    android:textSize="@dimen/text_body"
+                    android:textStyle="bold" />
+
+                <ImageButton
+                    android:id="@+id/btn_sidebar_settings"
+                    android:layout_width="@dimen/icon_btn"
+                    android:layout_height="@dimen/icon_btn"
+                    android:layout_marginStart="4dp"
+                    android:background="@drawable/btn_focusable_bg"
+                    android:contentDescription="Настройки"
+                    android:focusable="true"
+                    android:padding="10dp"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/ic_settings"
+                    android:tint="@color/text_primary" />
+
+            </LinearLayout>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/sidebar_list"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_marginTop="4dp"
+                android:layout_weight="1"
+                android:clipToPadding="false"
+                android:focusable="true"
+                android:scrollbars="none" />
+
+            <TextView
+                android:id="@+id/sidebar_hint"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:paddingVertical="6dp"
+                android:text="↑↓ канал   ↑ с верха — категории   ← категория   → избранное   OK — смотреть   удержание OK — меню   Back — закрыть"
+                android:textColor="@color/text_muted"
+                android:textSize="11sp" />
+        </LinearLayout>
+    </FrameLayout>
+</FrameLayout>

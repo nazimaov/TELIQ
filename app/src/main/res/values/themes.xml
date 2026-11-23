@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Заставка при холодном запуске -->
+    <style name="Theme.Teliq.Splash" parent="Theme.AppCompat.NoActionBar">
+        <item name="android:windowBackground">@drawable/splash_layer</item>
+        <item name="android:statusBarColor">@color/bg_main</item>
+        <item name="android:navigationBarColor">@color/bg_main</item>
+    </style>
+
+    <!-- Основная тема: тёмно-синяя, с неоновым акцентом -->
+    <style name="Theme.Teliq.Main" parent="Theme.AppCompat.NoActionBar">
+        <item name="android:windowBackground">@color/bg_main</item>
+        <item name="android:statusBarColor">@color/bg_main</item>
+        <item name="android:navigationBarColor">@color/bg_main</item>
+        <item name="colorPrimary">@color/accent</item>
+        <item name="colorAccent">@color/accent</item>
+    </style>
+
+    <!-- Экран настроек по-прежнему на Leanback -->
+    <style name="Theme.Teliq.Leanback" parent="Theme.Leanback">
+        <item name="android:windowBackground">@color/bg_main</item>
+    </style>
+
+    <!-- Настройки как всплывающее модальное окно -->
+    <style name="Theme.Teliq.Dialog" parent="Theme.AppCompat.Dialog">
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowIsFloating">true</item>
+        <item name="android:backgroundDimEnabled">true</item>
+        <item name="android:backgroundDimAmount">0.7</item>
+        <item name="colorPrimary">@color/accent</item>
+        <item name="colorAccent">@color/accent</item>
+    </style>
+
+    <style name="Theme.Teliq.Player" parent="Theme.Leanback">
+        <item name="android:windowBackground">@android:color/black</item>
+        <item name="android:windowFullscreen">true</item>
+    </style>
+</resources>
