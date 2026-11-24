@@ -99,6 +99,9 @@ class VodPlayerActivity : FragmentActivity() {
             val media = Media(l, Uri.parse(url))
             media.setHWDecoderEnabled(true, false)
             media.addOption(":network-caching=3000")   // фильм не эфир: буфер побольше — меньше остановок
+            // Встроенный HLS-демуксер libVLC 3.6 падает (assert в FakeESOut) на потоках с отрицательными метками времени;
+            // демуксер libavformat тот же поток читает без аварии
+            media.addOption(":demux=avformat")
             mp.media = media
             media.release()
             mp.play()
