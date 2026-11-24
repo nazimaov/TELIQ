@@ -100,12 +100,62 @@ class VodActivity : FragmentActivity() {
             val cur = currentFocus
             val next = cur?.focusSearch(View.FOCUS_LEFT)
             if (cur != null && (next == null || next === cur || !isLeftOf(next, cur))) {
-                TeliqApp.instance.openMenuOnReturn = true
-                finish()
+                showMenu()
                 return true
             }
         }
         return super.dispatchKeyEvent(event)
+    }
+
+    /** Боковое меню поверх «Кино» (как на главном экране): раздел выбирается, «Кино» остаётся под ним, пока не уйдём. */
+    private fun showMenu() {
+        fun dp(n: Int) = Ui.dp(this, n)
+        val dialog = Dialog(this)
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        val root = LinearLayout(this).apply {
+            orientation = LinearLayout.VERTICAL
+            background = ContextCompat.getDrawable(this@VodActivity, R.drawable.nav_rail_bg)
+            setPadding(dp(14), dp(24), dp(14), dp(14))
+        }
+        var current: View? = null
+        fun entry(label: String, nav: String?) {
+            val tv = TextView(this).apply {
+                text = label
+                setTextSize(TypedValue.COMPLEX_UNIT_PX, resources.getDimension(R.dimen.nav_label_size))
+                setTextColor(Color.WHITE)
+                typeface = Typeface.DEFAULT_BOLD
+                gravity = Gravity.CENTER_VERTICAL
+                setPadding(dp(18), 0, dp(10), 0)
+                background = ContextCompat.getDrawable(this@VodActivity, R.drawable.nav_item_bg)
+                isFocusable = true
+                isClickable = true
+                isActivated = nav == null
+                setOnClickListener {
+                    dialog.dismiss()
+                    if (nav != null) { TeliqApp.instance.pendingNav = nav; finish() }
+                }
+            }
+            root.addView(tv, LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, dp(58)).apply { topMargin = dp(3); bottomMargin = dp(3) })
+            if (nav == null) current = tv
+        }
+        entry("🏠  Главная", "home")
+        entry("📺  Все каналы", "channels")
+        entry("🎬  Кино", null)
+        entry("♥  Избранное", "fav")
+        entry("🕘  История", "hist")
+        entry("⚙  Настройки", "settings")
+        dialog.setContentView(root)
+        dialog.window?.apply {
+            setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+            setGravity(Gravity.START)
+            setLayout(dp(280), ViewGroup.LayoutParams.MATCH_PARENT)
+        }
+        // → закрывает меню, как на главном экране
+        dialog.setOnKeyListener { d, code, ev ->
+            if (code == android.view.KeyEvent.KEYCODE_DPAD_RIGHT && ev.action == android.view.KeyEvent.ACTION_DOWN) { d.dismiss(); true } else false
+        }
+        dialog.show()
+        current?.requestFocus()
     }
 
     private fun isLeftOf(a: View, b: View): Boolean {

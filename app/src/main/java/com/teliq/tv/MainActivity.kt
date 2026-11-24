@@ -173,9 +173,17 @@ class MainActivity : FragmentActivity() {
     override fun onResume() {
         super.onResume()
         val app = TeliqApp.instance
-        if (app.openMenuOnReturn) {
-            app.openMenuOnReturn = false
-            navScroll?.post { showRail() }
+        app.pendingNav?.let { nav ->
+            app.pendingNav = null
+            handler.post {
+                when (nav) {
+                    "home" -> setPage(Page.HOME)
+                    "channels" -> { activeCategory = "Все"; setPage(Page.CHANNELS) }
+                    "fav" -> setPage(Page.FAVORITES)
+                    "hist" -> setPage(Page.HISTORY)
+                    "settings" -> startActivity(Intent(this, SettingsActivity::class.java))
+                }
+            }
         }
         // Открываем настройки только если плейлист ещё ни разу не задан.
         if (app.settings.playlistUrls.isEmpty() && app.channels.isEmpty()) {
