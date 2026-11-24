@@ -2,7 +2,7 @@
 <resources>
     <dimen name="content_padding">24dp</dimen>
     <dimen name="header_height">72dp</dimen>
-    <dimen name="nav_rail_width">224dp</dimen>
+    <dimen name="nav_rail_width">280dp</dimen>
     <dimen name="tile_min_width">190dp</dimen>
     <dimen name="tile_logo_height">72dp</dimen>
     <dimen name="hero_height">160dp</dimen>

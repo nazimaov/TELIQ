@@ -118,7 +118,7 @@ class VodActivity : FragmentActivity() {
             setPadding(dp(14), dp(24), dp(14), dp(14))
         }
         var current: View? = null
-        fun entry(label: String, nav: String?) {
+        fun entry(label: String, nav: String?, small: Boolean = false) {
             val tv = TextView(this).apply {
                 text = label
                 setTextSize(TypedValue.COMPLEX_UNIT_PX, resources.getDimension(R.dimen.nav_label_size))
@@ -135,16 +135,26 @@ class VodActivity : FragmentActivity() {
                     if (nav != null) { TeliqApp.instance.pendingNav = nav; finish() }
                 }
             }
-            root.addView(tv, LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, dp(58)).apply { topMargin = dp(3); bottomMargin = dp(3) })
+            root.addView(tv, LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, dp(if (small) 50 else 60)).apply { topMargin = dp(3); bottomMargin = dp(3) })
             if (nav == null) current = tv
         }
         entry("🏠  Главная", "home")
         entry("📺  Все каналы", "channels")
+        // те же категории каналов, что и в меню главного экрана
+        TeliqApp.instance.channels.map { it.group }.distinct().sorted().forEach { g ->
+            entry(CategoryIcons.decorate(g).toString(), "cat:$g", small = true)
+        }
         entry("🎬  Кино", null)
         entry("♥  Избранное", "fav")
         entry("🕘  История", "hist")
         entry("⚙  Настройки", "settings")
-        dialog.setContentView(root)
+        dialog.setContentView(ScrollView(this).apply {
+            background = ContextCompat.getDrawable(this@VodActivity, R.drawable.nav_rail_bg)
+            isFillViewport = true
+            isVerticalScrollBarEnabled = false
+            addView(root)
+        })
+        root.background = null
         dialog.window?.apply {
             setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
             setGravity(Gravity.START)

@@ -182,6 +182,7 @@ class MainActivity : FragmentActivity() {
                     "fav" -> setPage(Page.FAVORITES)
                     "hist" -> setPage(Page.HISTORY)
                     "settings" -> startActivity(Intent(this, SettingsActivity::class.java))
+                    else -> if (nav.startsWith("cat:")) { activeCategory = nav.removePrefix("cat:"); setPage(Page.CHANNELS) }
                 }
             }
         }
@@ -425,7 +426,8 @@ class MainActivity : FragmentActivity() {
             isClickable = true
             maxLines = 1
             ellipsize = android.text.TextUtils.TruncateAt.END
-            val d = iconRes?.let { ContextCompat.getDrawable(this@MainActivity, it)!!.mutate() }
+            // в боковом меню — эмодзи в названии (как в «Кино»), векторные значки только в нижней панели телефона
+            val d = if (rail) null else iconRes?.let { ContextCompat.getDrawable(this@MainActivity, it)!!.mutate() }
             d?.setBounds(0, 0, iconSize, iconSize)
             if (rail) {
                 gravity = Gravity.START or Gravity.CENTER_VERTICAL
@@ -460,7 +462,8 @@ class MainActivity : FragmentActivity() {
             add(v, h)
         }
 
-        entry("home", R.drawable.ic_home, "Главная") { setPage(Page.HOME) }
+        fun lbl(emoji: String, text: String) = if (rail) "$emoji  $text" else text
+        entry("home", R.drawable.ic_home, lbl("🏠", "Главная")) { setPage(Page.HOME) }
         if (railMode) {
             // Категории — прямо в боковом меню
             val catH = if (isTv) 50 else 44
@@ -476,10 +479,10 @@ class MainActivity : FragmentActivity() {
             entry("channels", R.drawable.ic_tv, "Телеканалы") { setPage(Page.CHANNELS) }
         }
         // Каталог фильмов и сериалов (VPortal) — только если портал подключён в настройках
-        if (hasPortal()) entry("movies", R.drawable.ic_play, "Кино") { startActivity(Intent(this, VodActivity::class.java)) }
-        entry("fav", R.drawable.ic_favorite, "Избранное") { setPage(Page.FAVORITES) }
-        entry("hist", R.drawable.ic_history, "История") { setPage(Page.HISTORY) }
-        add(make(R.drawable.ic_settings, "Настройки") {
+        if (hasPortal()) entry("movies", R.drawable.ic_play, lbl("🎬", "Кино")) { startActivity(Intent(this, VodActivity::class.java)) }
+        entry("fav", R.drawable.ic_favorite, lbl("♥", "Избранное")) { setPage(Page.FAVORITES) }
+        entry("hist", R.drawable.ic_history, lbl("🕘", "История")) { setPage(Page.HISTORY) }
+        add(make(R.drawable.ic_settings, lbl("⚙", "Настройки")) {
             hideRail()
             startActivity(Intent(this, SettingsActivity::class.java))
         })
