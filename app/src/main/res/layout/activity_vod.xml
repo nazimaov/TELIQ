@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!-- Кино (VPortal): разделы, постеры, поиск -->
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg_main">
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:importantForAccessibility="no"
+        android:scaleType="centerCrop"
+        android:src="@drawable/bg_waves"
+        android:tint="@color/scrim"
+        android:tintMode="src_over" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/header_height"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingHorizontal="@dimen/content_padding">
+
+            <TextView
+                android:id="@+id/vod_title"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="🎬  Кино"
+                android:textColor="@color/text_primary"
+                android:textSize="@dimen/section_title_size"
+                android:textStyle="bold" />
+
+            <ImageButton
+                android:id="@+id/btn_vod_search"
+                android:layout_width="@dimen/icon_btn"
+                android:layout_height="@dimen/icon_btn"
+                android:background="@drawable/btn_focusable_bg"
+                android:contentDescription="Поиск"
+                android:focusable="true"
+                android:padding="10dp"
+                android:scaleType="centerInside"
+                android:src="@drawable/ic_search"
+                android:tint="@color/text_primary" />
+        </LinearLayout>
+
+        <HorizontalScrollView
+            android:id="@+id/vod_cats_scroll"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:clipToPadding="false"
+            android:paddingVertical="6dp"
+            android:scrollbars="none">
+
+            <LinearLayout
+                android:id="@+id/vod_cats"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingHorizontal="@dimen/content_padding" />
+        </HorizontalScrollView>
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/vod_list"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:clipChildren="false"
+                android:clipToPadding="false"
+                android:focusable="false"
+                android:paddingHorizontal="@dimen/content_padding"
+                android:paddingBottom="16dp"
+                android:scrollbars="none" />
+
+            <TextView
+                android:id="@+id/vod_empty"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:padding="32dp"
+                android:textColor="@color/text_muted"
+                android:textSize="@dimen/text_body" />
+        </FrameLayout>
+    </LinearLayout>
+</FrameLayout>

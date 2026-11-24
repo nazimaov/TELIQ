@@ -105,6 +105,8 @@ class SettingsActivity : FragmentActivity() {
             }
         }
 
+        findViewById<LinearLayout>(R.id.card_portal).setOnClickListener { showPortalDialog() }
+
         findViewById<TextView>(R.id.update_status).text = "версия ${BuildConfig.VERSION_NAME}"
         findViewById<LinearLayout>(R.id.card_update).setOnClickListener {
             lifecycleScope.launch { Updater.check(applicationContext, force = true, userInitiated = true) }
@@ -237,8 +239,41 @@ class SettingsActivity : FragmentActivity() {
         }
     }
 
+    /** Подключение каталога фильмов VPortal: вставить ссылку `portal::[key:…]http://…/api/v1/`, проверить, сохранить. */
+    private fun showPortalDialog() {
+        val settings = TeliqApp.instance.settings
+        if (settings.portalLink.isEmpty()) { promptPortal(); return }
+        AlertDialog.Builder(this)
+            .setTitle("Кино (VPortal) подключено")
+            .setItems(arrayOf("Заменить ссылку", "Отключить")) { _, which ->
+                if (which == 0) promptPortal() else { settings.portalLink = ""; refreshUi() }
+            }
+            .show()
+    }
+
+    private fun promptPortal() {
+        promptUrl("Ссылка VPortal (portal::[key:…]http://…)", "") { raw ->
+            val link = com.teliq.tv.data.vod.PortalLink.parse(raw)
+            if (link == null) {
+                Toast.makeText(this, "Не похоже на ссылку VPortal: portal::[key:…]http://…/api/v1/", Toast.LENGTH_LONG).show()
+                return@promptUrl
+            }
+            lifecycleScope.launch {
+                val result = withContext(Dispatchers.IO) { runCatching { com.teliq.tv.data.vod.VPortal.categories(link) } }
+                result.onSuccess { cats ->
+                    TeliqApp.instance.settings.portalLink = raw
+                    Toast.makeText(this@SettingsActivity, "Кино подключено: разделов ${cats.size}", Toast.LENGTH_LONG).show()
+                    refreshUi()
+                }.onFailure {
+                    Toast.makeText(this@SettingsActivity, "Портал не принял ключ: ${it.message}", Toast.LENGTH_LONG).show()
+                }
+            }
+        }
+    }
+
     private fun refreshUi() {
         val app = TeliqApp.instance
+        findViewById<TextView>(R.id.portal_status).text = if (app.settings.portalLink.isEmpty()) "не подключено" else "подключено"
         val urls = app.settings.playlistUrls
         playlistUrl.text = when (urls.size) {
             0 -> "URL не указан"

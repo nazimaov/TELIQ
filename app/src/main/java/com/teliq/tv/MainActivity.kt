@@ -37,6 +37,7 @@ import com.teliq.tv.ui.HomeItem
 import com.teliq.tv.ui.SearchActivity
 import com.teliq.tv.ui.SettingsActivity
 import com.teliq.tv.ui.UpdateDialog
+import com.teliq.tv.ui.VodActivity
 import com.teliq.tv.update.Updater
 import com.teliq.tv.ui.Ui
 import kotlinx.coroutines.Dispatchers
@@ -245,7 +246,7 @@ class MainActivity : FragmentActivity() {
         categories = listOf("Все") + (if (all.any { it.isFavorite }) listOf(FAV_CAT) else emptyList()) + groups
         if (activeCategory !in categories) activeCategory = "Все"
         if (page == Page.CHANNELS && activeCategory == FAV_CAT && FAV_CAT !in categories) activeCategory = "Все"
-        if (railMode && navKey != categories.joinToString("|")) buildNav()
+        if (navKey != navSignature()) buildNav()
         updateNav()
         rebuildCategoryBar()
         rebuildItems()
@@ -392,7 +393,7 @@ class MainActivity : FragmentActivity() {
     private fun buildNav() {
         navContainer.removeAllViews()
         navItems.clear()
-        navKey = categories.joinToString("|")
+        navKey = navSignature()
         val rail = navContainer.orientation == LinearLayout.VERTICAL
         val iconSize = Ui.dp(this, if (isTv) 30 else 24)
         val states = ColorStateList(
@@ -462,6 +463,8 @@ class MainActivity : FragmentActivity() {
         } else {
             entry("channels", R.drawable.ic_tv, "Телеканалы") { setPage(Page.CHANNELS) }
         }
+        // Каталог фильмов и сериалов (VPortal) — только если портал подключён в настройках
+        if (hasPortal()) entry("movies", R.drawable.ic_play, "Кино") { startActivity(Intent(this, VodActivity::class.java)) }
         entry("fav", R.drawable.ic_favorite, "Избранное") { setPage(Page.FAVORITES) }
         entry("hist", R.drawable.ic_history, "История") { setPage(Page.HISTORY) }
         add(make(R.drawable.ic_settings, "Настройки") {
@@ -470,6 +473,11 @@ class MainActivity : FragmentActivity() {
         })
         updateNav()
     }
+
+    private fun hasPortal() = TeliqApp.instance.settings.portalLink.isNotEmpty()
+
+    /** Что определяет состав меню: категории (в боковом меню) и пункт «Кино». */
+    private fun navSignature(): String = (if (railMode) categories.joinToString("|") else "") + (if (hasPortal()) "|vod" else "")
 
     private fun activeNavKey(): String = when (page) {
         Page.HOME -> "home"

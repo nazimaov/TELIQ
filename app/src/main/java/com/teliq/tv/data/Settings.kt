@@ -111,7 +111,17 @@ class Settings(ctx: Context) {
         }
         set(v) = sp.edit().putString(KEY_PLAYLISTS, v.joinToString("\n")).apply()
 
+    /**
+     * Ссылка каталога фильмов VPortal: `portal::[key:КЛЮЧ]http://хост/api/v1/` (пусто — не подключён).
+     * Хранится отдельно от M3U-плейлистов: это не список каналов, а каталог кино.
+     */
+    var portalLink: String
+        get() = sp.getString(KEY_PORTAL, "") ?: ""
+        set(v) = sp.edit().putString(KEY_PORTAL, v.trim()).apply()
+
     fun addPlaylistUrl(url: String) {
+        // Ссылку портала можно вставить и в обычное окно «Плейлисты»: она уходит в раздел «Кино», а не в M3U
+        if (url.trim().startsWith("portal::", ignoreCase = true)) { portalLink = url; return }
         val cur = playlistUrls.toMutableList()
         if (url !in cur) cur += url
         playlistUrls = cur
@@ -170,6 +180,7 @@ class Settings(ctx: Context) {
         set(v) = sp.edit().putBoolean(KEY_SHOW_NUMBERS, v).apply()
 
     companion object {
+        private const val KEY_PORTAL = "portal_link"
         private const val KEY_PLAYLIST_URL = "playlist_url"
         private const val KEY_EPG_URL = "epg_url"
         private const val KEY_LAST_CHANNEL = "last_channel"
