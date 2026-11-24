@@ -94,6 +94,26 @@ class VodActivity : FragmentActivity() {
         loadCategories()
     }
 
+    /** ← с самого левого края (постер или раздел) — назад на главный экран с открытым боковым меню. */
+    override fun dispatchKeyEvent(event: android.view.KeyEvent): Boolean {
+        if (event.action == android.view.KeyEvent.ACTION_DOWN && event.keyCode == android.view.KeyEvent.KEYCODE_DPAD_LEFT && event.repeatCount == 0) {
+            val cur = currentFocus
+            val next = cur?.focusSearch(View.FOCUS_LEFT)
+            if (cur != null && (next == null || next === cur || !isLeftOf(next, cur))) {
+                TeliqApp.instance.openMenuOnReturn = true
+                finish()
+                return true
+            }
+        }
+        return super.dispatchKeyEvent(event)
+    }
+
+    private fun isLeftOf(a: View, b: View): Boolean {
+        val la = IntArray(2); val lb = IntArray(2)
+        a.getLocationOnScreen(la); b.getLocationOnScreen(lb)
+        return la[0] + a.width / 2 < lb[0] + b.width / 2 && la[1] < lb[1] + b.height && lb[1] < la[1] + a.height
+    }
+
     private fun loadCategories() {
         val l = link ?: return
         empty.text = "Загрузка…"

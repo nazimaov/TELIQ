@@ -15,6 +15,9 @@ class TeliqApp : Application() {
     @Volatile var channels: List<Channel> = emptyList()
     @Volatile var epg: Epg = Epg()
 
+    /** Экран «Кино» просит главный экран открыть боковое меню при возврате (стрелка влево с левого края). */
+    @Volatile var openMenuOnReturn = false
+
     override fun onCreate() {
         super.onCreate()
         instance = this

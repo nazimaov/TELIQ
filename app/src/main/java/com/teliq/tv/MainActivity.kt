@@ -173,6 +173,10 @@ class MainActivity : FragmentActivity() {
     override fun onResume() {
         super.onResume()
         val app = TeliqApp.instance
+        if (app.openMenuOnReturn) {
+            app.openMenuOnReturn = false
+            navScroll?.post { showRail() }
+        }
         // Открываем настройки только если плейлист ещё ни разу не задан.
         if (app.settings.playlistUrls.isEmpty() && app.channels.isEmpty()) {
             startActivity(Intent(this, SettingsActivity::class.java))
