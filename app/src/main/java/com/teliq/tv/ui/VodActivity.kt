@@ -273,25 +273,12 @@ class VodActivity : FragmentActivity() {
     // ---------------------------------------------------------------- поиск
 
     private fun promptSearch() {
-        val edit = EditText(this).apply {
-            inputType = InputType.TYPE_CLASS_TEXT
-            hint = "Название фильма или сериала"
-            setSingleLine()
+        Dialogs.prompt(this, "Поиск", "Название фильма или сериала", okLabel = "Найти") { q ->
+            selected = -1
+            markSelected()
+            title.text = "🎬  Кино · «$q»"
+            startList({ null }, search = q)
         }
-        AlertDialog.Builder(this)
-            .setTitle("Поиск")
-            .setView(edit)
-            .setPositiveButton("Найти") { _, _ ->
-                val q = edit.text.toString().trim()
-                if (q.isNotEmpty()) {
-                    selected = -1
-                    markSelected()
-                    title.text = "🎬  Кино · «$q»"
-                    startList({ null }, search = q)
-                }
-            }
-            .setNegativeButton("Отмена", null)
-            .show()
     }
 
     // ---------------------------------------------------------------- открытие

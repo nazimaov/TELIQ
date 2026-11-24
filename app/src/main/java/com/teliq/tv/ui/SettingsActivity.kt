@@ -301,20 +301,7 @@ class SettingsActivity : FragmentActivity() {
     }
 
     private fun promptUrl(title: String, current: String, onOk: (String) -> Unit) {
-        val edit = EditText(this).apply {
-            inputType = InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_URI
-            setText(current)
-            setSingleLine()
-        }
-        AlertDialog.Builder(this)
-            .setTitle(title)
-            .setView(edit)
-            .setPositiveButton("OK") { _, _ ->
-                val s = edit.text.toString().trim()
-                if (s.isNotEmpty()) onOk(s)
-            }
-            .setNegativeButton("Отмена", null)
-            .show()
+        Dialogs.prompt(this, title, "Вставьте ссылку", current, uri = true, onOk = onOk)
     }
 
     private fun reloadPlaylist(url: String) {
